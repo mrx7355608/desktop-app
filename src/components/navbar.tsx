@@ -17,9 +17,9 @@ export default function Navbar() {
   });
 
   return (
-    <div className="border-b w-full">
-      <div className="w-full mx-auto flex h-26 items-center justify-around px-8">
-        <h1 className="text-2xl font-bold mr-auto">Records Manager</h1>
+    <div className="w-full my-9">
+      <div className="w-full max-w-5xl mx-auto flex h-26 items-center justify-around">
+        <h1 className="text-4xl font-bold mr-auto">Desktop App</h1>
 
         <div className="flex items-center gap-4">
           <div className="relative w-full max-w-sm">
@@ -38,8 +38,12 @@ export default function Navbar() {
                 <span className="sr-only">Filter records</span>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-40">
+            <DropdownMenuContent
+              align="end"
+              className="w-40 p-2 border border-gray-200 rounded-xl mt-2 bg-white cursor-pointer"
+            >
               <DropdownMenuCheckboxItem
+                className="px-3 py-2 rounded-lg hover:bg-gray-100 border-0 outline-0"
                 checked={filterOptions.active}
                 onCheckedChange={(checked) =>
                   setFilterOptions({ ...filterOptions, active: checked })
@@ -48,6 +52,7 @@ export default function Navbar() {
                 Active
               </DropdownMenuCheckboxItem>
               <DropdownMenuCheckboxItem
+                className="px-3 py-2 rounded-lg hover:bg-gray-100 border-0 outline-0"
                 checked={filterOptions.completed}
                 onCheckedChange={(checked) =>
                   setFilterOptions({ ...filterOptions, completed: checked })
@@ -56,6 +61,7 @@ export default function Navbar() {
                 Completed
               </DropdownMenuCheckboxItem>
               <DropdownMenuCheckboxItem
+                className="px-3 py-2 rounded-lg hover:bg-gray-100 border-0 outline-0"
                 checked={filterOptions.pending}
                 onCheckedChange={(checked) =>
                   setFilterOptions({ ...filterOptions, pending: checked })
