@@ -1,20 +1,29 @@
 "use client";
 
-import { useState } from "react";
-import { ChevronDown, ChevronUp, Plus, Users } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Spinner } from "./ui/spinner";
+import RecordItem from "./record-item";
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
-import AddHissedarModal from "./hissedar-modal";
+export interface Hissedar {
+  id: number;
+  name: string;
+  paid: string;
+  remaining: string;
+  total_hisse: number;
+  payment_receiver: string;
+  contact: string;
+}
+
+export interface RecordProperties {
+  [key: string]: string;
+}
+
+export interface AnimalRecord {
+  id: number;
+  tagNumber: string;
+  properties: RecordProperties;
+  hissedars: Hissedar[];
+}
 
 // Sample data for demonstration
 const animals = [
@@ -120,129 +129,24 @@ const animals = [
 ];
 
 export default function RecordsList() {
-  const [expandedRecords, setExpandedRecords] = useState<number[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [records, setRecords] = useState<AnimalRecord[]>([]);
 
-  const toggleHissedar = (id: number) => {
-    setExpandedRecords((prev) =>
-      prev.includes(id)
-        ? prev.filter((recordId) => recordId !== id)
-        : [...prev, id],
-    );
-  };
+  useEffect(() => {
+    setTimeout(() => {
+      setRecords(animals);
+      setLoading(false);
+    }, 3000);
+  }, []);
 
-  const handleAddHissedar = (animalId: number, newHissedar: any) => {
-    if (!expandedRecords.includes(animalId)) {
-      setExpandedRecords((prev) => [...prev, animalId]);
-    }
-  };
+  if (loading) {
+    return <Spinner size="medium" />;
+  }
 
   return (
     <div className="space-y-6 max-w-5xl mx-auto">
-      {animals.map((animal) => (
-        <Card key={animal.id} className="overflow-hidden">
-          <CardContent className="p-0">
-            <div className="px-4">
-              <h2 className="text-3xl font-bold">#{animal.tagNumber}</h2>
-            </div>
-
-            <div className="p-4">
-              <div className="grid grid-cols-3 gap-4 mb-4">
-                {Object.entries(animal.properties).map(([key, value]) => (
-                  <div
-                    key={key}
-                    className="bg-white rounded-lg p-3 border border-border"
-                  >
-                    <p className="text-xs text-muted-foreground uppercase font-medium mb-1">
-                      {key}
-                    </p>
-                    <p className="font-semibold">{value}</p>
-                  </div>
-                ))}
-              </div>
-
-              <div className="flex gap-3 mt-8">
-                <Button
-                  variant="outline"
-                  onClick={() => toggleHissedar(animal.id)}
-                  className="flex items-center"
-                >
-                  <Users className="mr-2 h-4 w-4" />
-                  {expandedRecords.includes(animal.id)
-                    ? "Hide Hissedar"
-                    : "Show Hissedar"}
-                  {expandedRecords.includes(animal.id) ? (
-                    <ChevronUp className="ml-2 h-4 w-4" />
-                  ) : (
-                    <ChevronDown className="ml-2 h-4 w-4" />
-                  )}
-                </Button>
-                <Button variant="outline" className="border-gray-700">
-                  <Plus className="mr-2 h-4 w-4" />
-                  Add Hissedar
-                </Button>
-                <AddHissedarModal
-                  trigger={
-                    <Button>
-                      <Plus className="mr-2 h-4 w-4" />
-                      Add Hissedar
-                    </Button>
-                  }
-                  animalId={animal.id}
-                  onAddHissedar={(newHissedar) =>
-                    handleAddHissedar(animal.id, newHissedar)
-                  }
-                />
-              </div>
-
-              {expandedRecords.includes(animal.id) && (
-                <div className="mt-4 border rounded-lg overflow-hidden transition-all duration-300 ease-in-out">
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>Name</TableHead>
-                        <TableHead>Contact</TableHead>
-                        <TableHead>Paid Amount</TableHead>
-                        <TableHead>Remaining Amount</TableHead>
-                        <TableHead>Total Hisse</TableHead>
-                        <TableHead>Date</TableHead>
-                        <TableHead>Payment Receiver</TableHead>
-                        <TableHead className="w-[100px]">Actions</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {animal.hissedars.map((hissedar) => (
-                        <TableRow key={hissedar.id}>
-                          <TableCell className="font-medium">
-                            {hissedar.name}
-                          </TableCell>
-                          <TableCell className="font-medium">
-                            {hissedar.contact}
-                          </TableCell>
-                          <TableCell>{hissedar.paid}</TableCell>
-                          <TableCell>{hissedar.remaining}</TableCell>
-                          <TableCell>
-                            <Badge variant="outline">
-                              {hissedar.total_hisse}
-                            </Badge>
-                          </TableCell>
-                          <TableCell>
-                            {new Date().toDateString().slice(4)}
-                          </TableCell>
-                          <TableCell>{hissedar.payment_receiver}</TableCell>
-                          <TableCell>
-                            <Button variant="ghost" size="sm">
-                              Edit
-                            </Button>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </div>
-              )}
-            </div>
-          </CardContent>
-        </Card>
+      {records.map((animal) => (
+        <RecordItem animal={animal} />
       ))}
     </div>
   );
