@@ -19,8 +19,9 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import AddHissedarModal from "./hissedar-modal";
-import { AnimalRecord, Hissedar } from "./records-list";
+import { AnimalRecord, Hissedar } from "@/lib/types";
 import { formatPKR } from "@/lib/currency-formatter";
+import { formatLocalPKPhone } from "@/lib/contact-number-formatter";
 
 export default function RecordItem({
   animal,
@@ -151,7 +152,7 @@ export default function RecordItem({
                         {hissedar.name}
                       </TableCell>
                       <TableCell className="font-medium">
-                        {hissedar.contact}
+                        {formatLocalPKPhone(hissedar.contact)}
                       </TableCell>
                       <TableCell>{formatPKR(hissedar.paid_amount)}</TableCell>
                       <TableCell>

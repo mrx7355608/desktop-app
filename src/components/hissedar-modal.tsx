@@ -61,7 +61,7 @@ export default function AddHissedarModal({
     const newHissedar: Hissedar = {
       id: Date.now(), // Temporary ID for demo
       name: formData.name,
-      contact: formData.name,
+      contact: formData.contact,
       paid_amount: Number(formData.paidAmount),
       total_hisse: Number(formData.totalHisse),
       payment_receiver: formData.paymentReceiver,
