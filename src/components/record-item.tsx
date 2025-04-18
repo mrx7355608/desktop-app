@@ -19,23 +19,21 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import AddHissedarModal from "./hissedar-modal";
-import { AnimalRecord } from "./records-list";
+import { AnimalRecord, Hissedar } from "./records-list";
 import { formatPKR } from "@/lib/currency-formatter";
 
 export default function RecordItem({
   animal,
   onEdit,
   onDelete,
+  onAddHissedar,
 }: {
   animal: AnimalRecord;
   onDelete: (id: number) => void;
   onEdit: (id: number) => void;
+  onAddHissedar: (id: number, data: Hissedar) => void;
 }) {
   const [expandedRecordsId, setExpandedRecordsId] = useState<number[]>([]);
-
-  const handleAddHissedar = (animalId: number, newHissedar: any) => {
-    console.log(animalId);
-  };
 
   return (
     <Card key={animal.id} className="overflow-hidden">
@@ -126,7 +124,7 @@ export default function RecordItem({
               }
               animalId={animal.id}
               onAddHissedar={(newHissedar) =>
-                handleAddHissedar(animal.id, newHissedar)
+                onAddHissedar(animal.id, newHissedar)
               }
             />
           </div>
@@ -158,7 +156,8 @@ export default function RecordItem({
                       <TableCell>{formatPKR(hissedar.paid_amount)}</TableCell>
                       <TableCell>
                         {formatPKR(
-                          animal.perHissaAmount - hissedar.paid_amount,
+                          animal.perHissaAmount * hissedar.total_hisse -
+                            hissedar.paid_amount,
                         )}
                       </TableCell>
                       <TableCell>

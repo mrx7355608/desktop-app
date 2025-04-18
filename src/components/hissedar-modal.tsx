@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
+import { Hissedar } from "./records-list";
 
 interface AddHissedarModalProps {
   trigger?: React.ReactNode;
@@ -44,7 +45,6 @@ export default function AddHissedarModal({
     name: "",
     contact: "",
     paidAmount: "",
-    remainingAmount: "",
     totalHisse: "",
     paymentReceiver: "",
   });
@@ -58,11 +58,13 @@ export default function AddHissedarModal({
     e.preventDefault();
 
     // Create new hissedar object
-    const newHissedar = {
+    const newHissedar: Hissedar = {
       id: Date.now(), // Temporary ID for demo
-      ...formData,
-      date: date ? format(date, "PPP") : "",
-      animalId,
+      name: formData.name,
+      contact: formData.name,
+      paid_amount: Number(formData.paidAmount),
+      total_hisse: Number(formData.totalHisse),
+      payment_receiver: formData.paymentReceiver,
     };
 
     // Call the onAddHissedar function if provided
@@ -75,7 +77,6 @@ export default function AddHissedarModal({
       name: "",
       contact: "",
       paidAmount: "",
-      remainingAmount: "",
       totalHisse: "",
       paymentReceiver: "",
     });
@@ -134,21 +135,6 @@ export default function AddHissedarModal({
                 name="paidAmount"
                 type="number"
                 value={formData.paidAmount}
-                onChange={handleChange}
-                className="col-span-3"
-                required
-              />
-            </div>
-
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="remainingAmount" className="text-right">
-                Remaining
-              </Label>
-              <Input
-                id="remainingAmount"
-                name="remainingAmount"
-                type="number"
-                value={formData.remainingAmount}
                 onChange={handleChange}
                 className="col-span-3"
                 required

@@ -120,11 +120,26 @@ export default function RecordsList() {
   const deleteRecord = (animalId: number) => {
     setRecords((prev) => prev.filter((p) => p.id !== animalId));
   };
+  const handleAddHissedar = (animalId: number, newHissedar: any) => {
+    setRecords((prev) => {
+      return prev.map((rec) => {
+        if (rec.id === animalId) {
+          rec.hissedars.push(newHissedar);
+        }
+        return rec;
+      });
+    });
+  };
 
   return (
     <div className="space-y-6 max-w-5xl mx-auto">
       {records.map((animal) => (
-        <RecordItem animal={animal} onDelete={deleteRecord} />
+        <RecordItem
+          animal={animal}
+          onDelete={deleteRecord}
+          onEdit={editRecord}
+          onAddHissedar={handleAddHissedar}
+        />
       ))}
     </div>
   );
