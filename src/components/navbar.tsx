@@ -7,10 +7,15 @@ import {
   DropdownMenuCheckboxItem,
 } from "@radix-ui/react-dropdown-menu";
 import { Button } from "./ui/button";
-import { Filter, Plus, Search } from "lucide-react";
+import { Filter, Search } from "lucide-react";
 import AddAnimalModal from "./add-animal-modal";
+import { AnimalRecord } from "@/lib/types";
 
-export default function Navbar() {
+export default function Navbar({
+  onAddAnimal,
+}: {
+  onAddAnimal: (data: AnimalRecord) => void;
+}) {
   const [filterOptions, setFilterOptions] = useState({
     active: false,
     completed: false,
@@ -76,7 +81,7 @@ export default function Navbar() {
           </DropdownMenu>
 
           {/* Add New Record Modal */}
-          <AddAnimalModal />
+          <AddAnimalModal onAddAnimal={onAddAnimal} />
         </div>
       </div>
     </div>

@@ -96,6 +96,10 @@ function App() {
     }, 3000);
   }, []);
 
+  const insertRecord = (data: AnimalRecord) => {
+    setRecords((prev) => [...prev, data]);
+  };
+
   const editRecord = (animalId: number) => {};
   const deleteRecord = (animalId: number) => {
     setRecords((prev) => prev.filter((p) => p.id !== animalId));
@@ -113,7 +117,7 @@ function App() {
 
   return (
     <main>
-      <Navbar />
+      <Navbar onAddAnimal={insertRecord} />
       {loading ? (
         <Spinner />
       ) : (
