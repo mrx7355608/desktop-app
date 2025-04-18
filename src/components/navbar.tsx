@@ -8,6 +8,7 @@ import {
 } from "@radix-ui/react-dropdown-menu";
 import { Button } from "./ui/button";
 import { Filter, Plus, Search } from "lucide-react";
+import AddAnimalModal from "./add-animal-modal";
 
 export default function Navbar() {
   const [filterOptions, setFilterOptions] = useState({
@@ -21,6 +22,7 @@ export default function Navbar() {
       <div className="w-full max-w-5xl mx-auto flex h-26 items-center justify-around">
         <h1 className="text-4xl font-bold mr-auto">Desktop App</h1>
 
+        {/* Searchbar */}
         <div className="flex items-center gap-4">
           <div className="relative w-full max-w-sm">
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -31,6 +33,7 @@ export default function Navbar() {
             />
           </div>
 
+          {/* Filter dropdown menu  */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="icon">
@@ -72,10 +75,8 @@ export default function Navbar() {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <Button>
-            <Plus className="mr-2 h-4 w-4" />
-            Add Record
-          </Button>
+          {/* Add New Record Modal */}
+          <AddAnimalModal />
         </div>
       </div>
     </div>

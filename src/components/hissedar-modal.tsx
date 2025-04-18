@@ -86,7 +86,7 @@ export default function AddHissedarModal({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        {trigger || <Button>Add Hissedar</Button>}
+        {trigger || <Button className="cursor-pointer">Add Hissedar</Button>}
       </DialogTrigger>
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
@@ -214,11 +214,14 @@ export default function AddHissedarModal({
             <Button
               type="button"
               variant="outline"
+              className="cursor-pointer"
               onClick={() => setOpen(false)}
             >
               Cancel
             </Button>
-            <Button type="submit">Save Hissedar</Button>
+            <Button type="submit" className="cursor-pointer">
+              Save Hissedar
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>
